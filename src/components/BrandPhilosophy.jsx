@@ -39,14 +39,14 @@ export default function BrandPhilosophy({ theme }) {
   useEffect(() => {
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     ref.current?.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     return () => obs.disconnect();
-  }, []);
+  }, [theme]);
 
   return (
-    <section id="philosophy" ref={ref} className={`py-20 sm:py-28 ${isDark ? 'bg-gray-950' : 'bg-gray-50'}`}>
+    <section id="philosophy" ref={ref} className={`pt-28 pb-20 sm:pt-36 sm:pb-28 transition-colors duration-500 ${isDark ? 'bg-gray-950' : 'bg-gray-50'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Mission / Vision / Philosophy — top row */}

@@ -1,4 +1,4 @@
-import { Film, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { MapPin, ArrowUpRight } from 'lucide-react';
 
 /* Inline SVGs for social icons not available in this lucide-react version */
 const LinkedinIcon  = () => (
@@ -31,11 +31,11 @@ const LINKS = {
     { label: 'Press Kit',       href: '#contact'     },
   ],
   Content: [
-    { label: 'Originals',     href: '#originals'     },
-    { label: 'Documentaries', href: '#documentaries' },
-    { label: 'Impact Films',  href: '#impact'        },
-    { label: 'Learning',      href: '#learning'      },
-    { label: 'FutureLab',     href: '#futurelab'     },
+    { label: 'Originals',     href: '#content/originals'     },
+    { label: 'Documentaries', href: '#content/documentaries' },
+    { label: 'Impact Films',  href: '#content/impact'        },
+    { label: 'Learning',      href: '#content/learning'      },
+    { label: 'FutureLab',     href: '#content/futurelab'     },
   ],
   Partner: [
     { label: 'Work With Us',       href: '#contact' },
@@ -53,9 +53,18 @@ const SOCIALS = [
   { icon: <XIcon         />, label: 'X',         href: '#' },
 ];
 
-const scrollTo = (href) => {
-  const el = document.querySelector(href);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+const handleLinkClick = (e, href) => {
+  e.preventDefault();
+  if (href.startsWith('#content') || href === '#philosophy' || href === '#about') {
+    window.location.hash = href;
+  } else {
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.hash = href;
+    }
+  }
 };
 
 export default function Footer({ theme }) {
@@ -64,52 +73,18 @@ export default function Footer({ theme }) {
   return (
     <footer id="contact" className={`border-t ${isDark ? 'bg-gray-950 border-white/6' : 'bg-gray-50 border-gray-200'}`}>
 
-      {/* CTA Band */}
-      <div className={`border-b ${isDark ? 'border-white/6' : 'border-gray-200'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-18">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div className="max-w-xl">
-              <h2 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                Ready to tell a story
-                <br className="hidden sm:block" />
-                that <span className="gradient-text">changes the world?</span>
-              </h2>
-              <p className={`text-sm sm:text-base ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                Whether you're a broadcaster, a corporation, a government, or a visionary — we'd love to create something remarkable with you.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
-              <a
-                href="mailto:hello@glarepost.com"
-                className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-display font-bold text-sm text-white gradient-bg shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <Mail size={16} />
-                hello@glarepost.com
-              </a>
-              <a
-                href="tel:+911234567890"
-                className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-display font-semibold text-sm border transition-all duration-200 hover:-translate-y-0.5
-                  ${isDark ? 'text-gray-300 border-white/12 hover:border-white/25' : 'text-gray-700 border-gray-200 hover:border-gray-300 bg-white'}`}
-              >
-                <Phone size={16} />
-                +91 12345 67890
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
 
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <a href="#" className="flex items-center gap-2.5 mb-5 group w-fit">
-              <div className="w-9 h-9 rounded-lg gradient-bg flex items-center justify-center text-white">
-                <Film size={16} />
-              </div>
-              <span className={`font-display font-extrabold text-lg tracking-widest ${isDark ? 'text-white' : 'text-gray-900'}`}>GLAREPOST</span>
+            <a href="#" className="block mb-5 group w-fit">
+              <img
+                src="/logo.jpeg"
+                alt="GLAREPOST"
+                className="h-10 w-auto rounded-none transition-all duration-300 group-hover:scale-105 shadow-md shadow-black/10"
+              />
             </a>
             <p className={`text-sm leading-relaxed mb-6 max-w-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
               India's first cinematic storytelling studio dedicated to sustainability, technology, innovation, and the future.
@@ -146,7 +121,7 @@ export default function Footer({ theme }) {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      onClick={e => { e.preventDefault(); scrollTo(link.href); }}
+                      onClick={e => handleLinkClick(e, link.href)}
                       className={`text-sm flex items-center gap-1 group transition-colors duration-150 ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
                     >
                       {link.label}
